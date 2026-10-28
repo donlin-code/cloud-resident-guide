@@ -1,0 +1,15 @@
+# Personal testing records and credentials never belong in this package.
+private/
+.env
+.env.*
+!.env.example
+auth.json
+*.pem
+*.key
+*.p12
+*.pfx
+*.har
+*.log
+node_modules/
+.DS_Store
+Thumbs.db
