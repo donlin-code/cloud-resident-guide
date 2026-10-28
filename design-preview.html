@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>四组绿色 · 明暗配色展示｜小怪行囊</title>
+  <link rel="stylesheet" href="assets/design-preview.css">
+</head>
+<body>
+  <a class="skip-link" href="#gallery">跳到配色展示</a>
+  <header class="page-head">
+    <a class="back-link" href="index.html">← 返回小怪行囊</a>
+    <span class="edition">DESIGN STUDY / GREEN EDITION</span>
+    <h1>同一份内容，四种绿色。</h1>
+    <p>在真实的文字、按钮与文章卡片中比较。选你喜欢的气质，也看看不同观看条件下是否清楚。</p>
+  </header>
+  <main>
+    <section class="controls" aria-label="预览控制">
+      <div class="mode-controls"><span>统一切换</span><button type="button" id="all-light">☀ 全部浅色</button><button type="button" id="all-dark">☾ 全部深色</button></div>
+      <label for="vision">观看条件<select id="vision"><option value="normal">正常色彩</option><option value="protan">红色色觉缺失 · 近似</option><option value="deutan">绿色色觉缺失 · 近似</option><option value="tritan">蓝黄色觉差异 · 近似</option><option value="gray">灰度</option></select></label>
+    </section>
+    <p class="simulation-note">模拟只改变下方网页样例，用于发现依赖颜色的信息；它不能代表每个人的实际视觉，也不等于无障碍认证。</p>
+    <p id="view-status" class="sr-only" role="status" aria-live="polite"></p>
+    <div id="gallery" class="gallery"></div>
+    <footer class="page-foot">四组均使用相同内容与布局 · 字色与按钮按明暗分别设计 · 当前主站配色不受预览影响</footer>
+  </main>
+  <script src="assets/design-preview.js"></script>
+</body>
+</html>

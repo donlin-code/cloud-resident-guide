@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>四组绿色 · 明暗配色展示｜小怪行囊</title>
+  <link rel="stylesheet" href="assets/design-preview.css">
+</head>
+<body>
+  <a class="skip-link" href="#gallery">跳到配色展示</a>
+  <header class="page-head">
+    <a class="back-link" href="index.html">← 返回小怪行囊</a>
+    <span class="edition">DESIGN STUDY / GREEN EDITION</span>
+    <h1>同一份内容，四种绿色。</h1>
+    <p>在真实的文字、按钮与文章卡片中比较。选你喜欢的气质，也看看不同观看条件下是否清楚。</p>
+  </header>
+  <main>
+    <section class="controls" aria-label="预览控制">
+      <div class="mode-controls"><span>统一切换</span><button type="button" id="all-light">☀ 全部浅色</button><button type="button" id="all-dark">☾ 全部深色</button></div>
+      <label for="vision">观看条件<select id="vision"><option value="normal">正常色彩</option><option value="protan">红色色觉缺失 · 近似</option><option value="deutan">绿色色觉缺失 · 近似</option><option value="tritan">蓝黄色觉差异 · 近似</option><option value="gray">灰度</option></select></label>
+    </section>
+    <p class="simulation-note">模拟只改变下方网页样例，用于发现依赖颜色的信息；它不能代表每个人的实际视觉，也不等于无障碍认证。</p>
+    <p id="view-status" class="sr-only" role="status" aria-live="polite"></p>
+    <div id="gallery" class="gallery"></div>
+    <footer class="page-foot">四组均使用相同内容与布局 · 字色与按钮按明暗分别设计 · 当前主站配色不受预览影响</footer>
+  </main>
+  <script>'use strict';
+(() => {
+  const themes = [
+    { id:'forest',name:'松林奶油',note:'自然 · 温暖 · 长文阅读',light:{bg:'#F5F3E9',surface:'#FFFEF8',ink:'#23352C',muted:'#58675D',primary:'#285444',on:'#FFFFFF',border:'#C5CCBE',tint:'#E5EBDD',focus:'#245DAD'},dark:{bg:'#14251F',surface:'#1D3128',ink:'#F0F3E9',muted:'#B6C6B9',primary:'#A8C5AE',on:'#14251F',border:'#4D6757',tint:'#283F31',focus:'#A6CCFF'}},
+    { id:'emerald',name:'翡翠雾白',note:'清爽 · 现代 · 数字工具',light:{bg:'#F3F7F5',surface:'#FFFFFF',ink:'#20392E',muted:'#536A5E',primary:'#176B50',on:'#FFFFFF',border:'#C1D2C9',tint:'#E1EFE7',focus:'#245DAD'},dark:{bg:'#10251E',surface:'#19372B',ink:'#EDF7F0',muted:'#B0C9BB',primary:'#7DD3AE',on:'#10251E',border:'#486F5C',tint:'#214734',focus:'#A6CCFF'}},
+    { id:'olive',name:'橄榄燕麦',note:'白底版 · 安静 · 生活杂志',light:{bg:'#FFFFFF',surface:'#FFFFFF',ink:'#33392A',muted:'#666C56',primary:'#596343',on:'#FFFFFF',border:'#C8CCB8',tint:'#E9EBD9',focus:'#245DAD'},dark:{bg:'#20251C',surface:'#2C3324',ink:'#F1F1E4',muted:'#C2C8AF',primary:'#BBC69A',on:'#20251C',border:'#636D51',tint:'#3A432D',focus:'#A6CCFF'}},
+    { id:'bamboo',name:'青竹石墨',note:'简洁 · 利落 · AI 与技术',light:{bg:'#F2F6F4',surface:'#FCFEFD',ink:'#213A2F',muted:'#536B5E',primary:'#28745A',on:'#FFFFFF',border:'#C1D2C8',tint:'#E0EEE7',focus:'#245DAD'},dark:{bg:'#17201C',surface:'#232F28',ink:'#EEF5EF',muted:'#B7C9BC',primary:'#95D5B2',on:'#17201C',border:'#506A59',tint:'#2B4133',focus:'#A6CCFF'}}
+  ];
+  // Linear-RGB matrices: Machado, Oliveira & Fernandes (2009), severity 1.0.
+  // Approximate dichromacy previews, not a representation of every viewer.
+  const matrices={protan:[.152286,1.052583,-.204868,.114503,.786281,.099216,-.003882,-.048116,1.051998],deutan:[.367322,.860646,-.227968,.280085,.672501,.047413,-.01182,.04294,.968881],tritan:[1.255528,-.076749,-.178779,-.078411,.930809,.147602,.004733,.691367,.3039]};
+  const gallery=document.getElementById('gallery'),vision=document.getElementById('vision'),status=document.getElementById('view-status');
+  const params=new URLSearchParams(location.search),single=themes.find(t=>t.id===params.get('theme'));
+  const visible=single?[single]:themes;
+  const modes=Object.fromEntries(themes.map(t=>[t.id,params.get('mode')==='dark'?'dark':'light']));
+  if(single){document.body.classList.add('single-view');document.querySelector('h1').textContent=single.name+'，放大看看。';document.querySelector('.back-link').href='design-preview.html';document.querySelector('.back-link').textContent='← 返回四组对照';document.title=single.name+' · 明暗配色展示｜小怪行囊';}
+  if(['normal','protan','deutan','tritan','gray'].includes(params.get('vision')))vision.value=params.get('vision');
+  const linear=c=>c<=.04045?c/12.92:((c+.055)/1.055)**2.4;
+  const srgb=c=>c<=.0031308?12.92*c:1.055*c**(1/2.4)-.055;
+  const rgb=h=>h.slice(1).match(/../g).map(v=>linear(parseInt(v,16)/255));
+  function simulate(hex){if(vision.value==='normal')return hex;const c=rgb(hex);let out;
+    if(vision.value==='gray'){const l=c[0]*.2126+c[1]*.7152+c[2]*.0722;out=[l,l,l];}
+    else {const m=matrices[vision.value];out=[0,1,2].map(i=>c.reduce((sum,v,j)=>sum+v*m[i*3+j],0));}
+    return '#'+out.map(v=>Math.round(srgb(Math.min(1,Math.max(0,v)))*255).toString(16).padStart(2,'0')).join('');
+  }
+  const luminance=h=>rgb(h).reduce((s,v,i)=>s+v*[.2126,.7152,.0722][i],0);
+  function contrast(a,b){const x=luminance(a),y=luminance(b);return ((Math.max(x,y)+.05)/(Math.min(x,y)+.05)).toFixed(2);}
+  function sample(t){return `<div class="sample" data-mode="${modes[t.id]}" aria-label="${t.name}网页样例">
+    <div class="sample-nav"><a class="sample-brand" href="index.html"><span class="brand-arrow" aria-hidden="true">↗</span><span class="brand-title">小怪行囊<span class="brand-en">DONLIN KIT</span></span></a><span class="nav-label">基础工具指南</span></div>
+    <div class="sample-body"><div class="eyebrow">FOR YOUR FIRST DIGITAL STEP</div><h3>数字世界很大。<br>从<em>用好一件工具</em>开始。</h3><p class="hero-desc">给第一次接触海外数字工具的你。把账号、AI 和订阅，一件件说清楚，让陌生变成会用。</p>
+    <div class="sample-actions"><a class="sample-cta" href="articles/01-choose-ai.html">开始阅读指南 <span aria-hidden="true">↗</span></a><a class="sample-link" href="articles/06-troubleshooting.html">遇到问题了？</a></div>
+    <div class="path"><span class="path-current">✓ 中国大陆 · 从这里开始</span><span aria-hidden="true">→</span><span>香港</span><span aria-hidden="true">→</span><span>新加坡</span><span aria-hidden="true">→</span><span>美国</span></div>
+    <div class="section-title"><h4>从理解，到真正用起来</h4><span>入门文章 / 01—06</span></div>
+    <div class="mini-articles"><article class="mini-article"><div class="article-cover">01 / 选对工具</div><div class="article-summary"><h5>如何选择适合自己的 AI 工具</h5><p>从任务、使用条件和预算开始，找到自己的第一步。</p><a href="articles/01-choose-ai.html">阅读全文 ↗</a></div></article><article class="mini-article"><div class="article-cover">02 / 管好账号</div><div class="article-summary"><h5>邮箱、账号和恢复方式怎么准备</h5><p>认识登录与恢复方式，让账号能够长期维护。</p><a href="articles/02-accounts.html">阅读全文 ↗</a></div></article></div>
+    <div class="sample-status" aria-label="证据类型展示"><span class="status-item"><span class="symbol" aria-hidden="true">✓</span>官方资料整理</span><span class="status-item"><span class="symbol" aria-hidden="true">!</span>本人实测待补</span></div><div class="sample-footer">先读懂 → 亲手试 → 留下自己的记录</div></div></div>`;}
+  visible.forEach((t,i)=>{const section=document.createElement('section');section.className='theme-option';section.dataset.theme=t.id;section.setAttribute('aria-labelledby','title-'+t.id);section.innerHTML=`<div class="option-head"><div class="option-name"><span class="option-number" aria-hidden="true">0${themes.indexOf(t)+1}</span><div><h2 id="title-${t.id}">${t.name}</h2><p>${t.note}</p></div></div><div class="mode-picker" role="group" aria-label="${t.name}明暗模式"><button type="button" data-mode="light" aria-pressed="true">浅色</button><button type="button" data-mode="dark" aria-pressed="false">深色</button></div></div>${sample(t)}<div class="option-bottom"><div class="color-values"></div><a class="solo-link" href="design-preview.html?theme=${t.id}">单独放大查看 ↗</a></div><p class="contrast-report"></p>`;gallery.append(section);section.querySelectorAll('[data-mode]').forEach(b=>{if(b.tagName==='BUTTON')b.addEventListener('click',()=>{modes[t.id]=b.dataset.mode;render();status.textContent=t.name+'已切换为'+(modes[t.id]==='dark'?'深色':'浅色');});});});
+  const roles=[['bg','页面背景'],['surface','卡片背景'],['ink','主要文字'],['muted','次要文字'],['primary','按钮／链接'],['on','按钮文字'],['tint','浅填充区域'],['border','分隔边框'],['focus','键盘焦点']];
+  visible.forEach(t=>{const details=document.createElement('details');details.className='palette-spec';details.innerHTML='<summary>查看完整明暗色号</summary><table><caption class="sr-only">'+t.name+'原始配色，不含色觉模拟</caption><thead><tr><th scope="col">用途</th><th scope="col">浅色模式</th><th scope="col">深色模式</th></tr></thead><tbody>'+roles.map(([key,label])=>'<tr><th scope="row">'+label+'</th>'+['light','dark'].map(mode=>'<td><span class="hex-cell"><i class="swatch" style="background:'+t[mode][key]+'" aria-hidden="true"></i><code>'+t[mode][key]+'</code></span></td>').join('')+'</tr>').join('')+'</tbody></table><p>以上为原始色号；观看条件模拟只改变上方样例。</p>';gallery.querySelector(`[data-theme="${t.id}"]`).append(details);});
+  function render(){visible.forEach(t=>{const section=gallery.querySelector(`[data-theme="${t.id}"]`),mode=modes[t.id],colors=t[mode],sampleEl=section.querySelector('.sample');sampleEl.dataset.mode=mode;Object.entries(colors).forEach(([k,v])=>sampleEl.style.setProperty('--g-'+k,simulate(v)));section.querySelectorAll('button[data-mode]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.mode===mode)));section.querySelector('.color-values').innerHTML=[['bg','背景'],['primary','主色']].map(([k,n])=>`<span><i class="swatch" style="background:${simulate(colors[k])}" aria-hidden="true"></i>${n} ${colors[k]}</span>`).join('');section.querySelector('.solo-link').href=`design-preview.html?theme=${t.id}&mode=${mode}&vision=${vision.value}`;section.querySelector('.contrast-report').textContent=`${vision.value==='normal'?'当前':'模拟后'}对比度：正文 ${contrast(simulate(colors.ink),simulate(colors.bg))}∶1 · 次要文字 ${contrast(simulate(colors.muted),simulate(colors.bg))}∶1 · 按钮 ${contrast(simulate(colors.on),simulate(colors.primary))}∶1`;});}
+  document.getElementById('all-light').addEventListener('click',()=>{visible.forEach(t=>modes[t.id]='light');render();status.textContent='所有方案已切换为浅色';});
+  document.getElementById('all-dark').addEventListener('click',()=>{visible.forEach(t=>modes[t.id]='dark');render();status.textContent='所有方案已切换为深色';});
+  vision.addEventListener('change',()=>{render();status.textContent='观看条件：'+vision.options[vision.selectedIndex].text;});render();
+})();
+</script>
+</body>
+</html>
