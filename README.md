@@ -2,7 +2,7 @@
 
 AI、出海工具与自由生活实践。冬零小怪的数字生活指南。
 
-面向第一次接触数字工具的中文读者，从中国大陆上班族使用 AI 的需求开始。当前为六篇可阅读资料修订稿，采用冬零小怪 xiaoguai-writer 写作流程，包含原创示意图、生活化解释、官方公开截图、来源及执行模板。
+面向第一次接触海外数字工具的中文读者。首页按基础账号、通信与内容平台、海外号码、VPS 与建站、AI 工具、支付与收款六类整理基础介绍、准备条件和常见问题。详细教程标注「文档待补充」，六篇早期 AI 资料稿保留在首页「早期文章」区域。
 
 ## 先读哪篇
 
@@ -21,7 +21,9 @@ AI、出海工具与自由生活实践。冬零小怪的数字生活指南。
 
 ## 如何更新
 
-修改 content/articles.json 后执行 node build.cjs，重新生成 articles/ 与 site/。原始资料稿保留在 archive/research-drafts。没有第三方依赖，不需要安装包。官方截图放 assets/，配图 SVG 会由构建脚本重新生成。
+工具目录修改 content/navigation.json；首页布局由 homepage.cjs 生成，样式与交互分别在 assets/homepage.css、assets/homepage.js。修改后执行 node build.cjs，生成的 site/index.html 内嵌目录数据、样式和交互，可直接双击打开；旧文章的相对链接需与 site/articles/ 一起保留。首页默认跟随系统配色，手动选择保存在浏览器本地，禁用本地存储时仍可使用。
+
+旧文章仍通过 content/articles.json 维护，构建时生成 articles/ 与 site/articles/。原始资料稿保留在 archive/research-drafts。没有第三方依赖，不需要安装包。官方截图放 assets/，配图 SVG 会由构建脚本重新生成。
 
 若要本地预览，执行 node preview.cjs，再打开 http://127.0.0.1:4173/ 。仓库默认私人保存，不启用 GitHub Pages、公开发布或收款功能。
 

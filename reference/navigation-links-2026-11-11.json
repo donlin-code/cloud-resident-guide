@@ -1,0 +1,139 @@
+{
+  "checked": "2026-11-11",
+  "scope": "仅验证官方域名入口的 HTTP 可达性；不代表功能、资格、费用或本人实测",
+  "links": [
+    {
+      "url": "https://support.apple.com/zh-cn/apple-account",
+      "status": 200,
+      "finalUrl": "https://support.apple.com/zh-cn/apple-account",
+      "result": "HTTP 可达；用途与资格仍需核对"
+    },
+    {
+      "url": "https://support.microsoft.com/zh-cn/account-billing",
+      "status": 404,
+      "finalUrl": "https://support.microsoft.com/zh-cn/account-billing",
+      "result": "访问受限或需进一步核对",
+      "correctedTo": "https://support.microsoft.com/zh-cn/accounts-billing/manage/microsoft-account-help"
+    },
+    {
+      "url": "https://support.google.com/accounts/?hl=zh-Hans",
+      "status": null,
+      "result": "本次环境未能验证",
+      "reason": "TimeoutError"
+    },
+    {
+      "url": "https://telegram.org/faq",
+      "status": null,
+      "result": "本次环境未能验证",
+      "reason": "TimeoutError"
+    },
+    {
+      "url": "https://faq.whatsapp.com/",
+      "status": null,
+      "result": "本次环境未能验证",
+      "reason": "TimeoutError"
+    },
+    {
+      "url": "https://help.x.com/zh-cn",
+      "status": null,
+      "result": "本次环境未能验证",
+      "reason": "TimeoutError"
+    },
+    {
+      "url": "https://support.apple.com/zh-cn/118669",
+      "status": 200,
+      "finalUrl": "https://support.apple.com/zh-cn/118669",
+      "result": "HTTP 可达；用途与资格仍需核对"
+    },
+    {
+      "url": "https://support.google.com/youtube/?hl=zh-Hans",
+      "status": null,
+      "result": "本次环境未能验证",
+      "reason": "TimeoutError"
+    },
+    {
+      "url": "https://www.gsma.com/",
+      "status": 403,
+      "finalUrl": "https://www.gsma.com/",
+      "result": "访问受限或需进一步核对"
+    },
+    {
+      "url": "https://aws.amazon.com/what-is/vps/",
+      "status": 200,
+      "finalUrl": "https://aws.amazon.com/what-is/vps/",
+      "result": "HTTP 可达；用途与资格仍需核对"
+    },
+    {
+      "url": "https://docs.github.com/zh/pages",
+      "status": 200,
+      "finalUrl": "https://docs.github.com/zh/pages",
+      "result": "HTTP 可达；用途与资格仍需核对"
+    },
+    {
+      "url": "https://www.deepseek.com/",
+      "status": 200,
+      "finalUrl": "https://www.deepseek.com/",
+      "result": "HTTP 可达；用途与资格仍需核对"
+    },
+    {
+      "url": "https://www.cloudflare.com/learning/dns/what-is-dns/",
+      "status": 403,
+      "finalUrl": "https://www.cloudflare.com/learning/dns/what-is-dns/",
+      "result": "访问受限或需进一步核对"
+    },
+    {
+      "url": "https://help.openai.com/",
+      "status": 403,
+      "finalUrl": "https://help.openai.com/",
+      "result": "访问受限或需进一步核对"
+    },
+    {
+      "url": "https://www.visa.com.cn/",
+      "status": 200,
+      "finalUrl": "https://www.visa.cn/",
+      "result": "HTTP 可达；用途与资格仍需核对"
+    },
+    {
+      "url": "https://www.paypal.com/c2/cshelp/personal",
+      "status": 200,
+      "finalUrl": "https://www.paypal.com/c2/cshelp/personal",
+      "result": "HTTP 可达；用途与资格仍需核对"
+    },
+    {
+      "url": "https://wise.com/help/",
+      "status": 200,
+      "finalUrl": "https://wise.com/help/",
+      "result": "HTTP 可达；用途与资格仍需核对"
+    },
+    {
+      "url": "https://help.instagram.com/",
+      "status": null,
+      "result": "本次环境未能验证",
+      "reason": "TimeoutError"
+    },
+    {
+      "url": "https://support.google.com/voice/?hl=zh-Hans",
+      "status": null,
+      "result": "本次环境未能验证",
+      "reason": "TimeoutError"
+    },
+    {
+      "url": "https://documentation.ubuntu.com/server/",
+      "status": null,
+      "result": "本次环境未能验证",
+      "reason": "TimeoutError"
+    },
+    {
+      "url": "https://www.payoneer.com/",
+      "status": 200,
+      "finalUrl": "https://www.payoneer.cn/",
+      "result": "HTTP 可达；用途与资格仍需核对"
+    },
+    {
+      "url": "https://support.microsoft.com/zh-cn/accounts-billing/manage/microsoft-account-help",
+      "browserVerified": true,
+      "title": "获取 Microsoft 帐户方面的帮助 | Microsoft Support",
+      "result": "已从微软官网进入并核对账号帮助页面"
+    }
+  ]
+}
